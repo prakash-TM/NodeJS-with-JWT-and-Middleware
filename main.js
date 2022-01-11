@@ -12,8 +12,6 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 
-
-
 app.get("/login", async(req, res) => {
     const payload = {
         id: 123,
