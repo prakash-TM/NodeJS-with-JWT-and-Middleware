@@ -3,9 +3,7 @@ const app = express();
 const port = 7200;
 const jwt = require("jsonwebtoken");
 const {
-    signToken,
-    validateSignature,
-    decodeToken,
+    signToken
 } = require("./utilities/jwt");
 
 app.use(express.urlencoded({ extended: true }));
@@ -80,24 +78,7 @@ app.get("/place-new-order", (req, res) => {
     res.status(200).send({ myToken });
 });
 
-const verifyToken = async(req, res, next) => {
-    const { token } = req.body;
 
-    const isAValidToken = await validateSignature(token);
-    if (!isAValidToken) {
-        return res
-            .status(401)
-            .send({ message: "You are not allowed to use the app" });
-    }
-    next();
-};
-
-app.get("/collect-new-order", verifyToken, async(req, res) => {
-    const { token } = req.body;
-
-    const tokenDetails = decodeToken(token);
-    res.send({ tokenDetails });
-});
 
 app.get("*", (req, res) => {
     res.send({});
